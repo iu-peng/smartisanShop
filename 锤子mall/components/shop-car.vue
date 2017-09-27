@@ -33,7 +33,7 @@
                                             </h6>
                                         </div>
                                     </div>
-                                    <div class="del-btn" good-id="item.sku_id" @click="delGoods(item.sku_id)">删除</div>
+                                    <div class="del-btn" good-id="item.sku_id" @click.stop="delGoods(item.sku_id)">删除</div>
                                 </div>
                             </div>
                         </li>
@@ -43,7 +43,11 @@
                     <p>共 <strong class="ng-binding">{{goodsNumSum}}</strong> 件商品</p>
                     <h5>合计：<span class="price-icon">¥</span><span class="price-num ng-binding" ng-bind="cartMenu.totalPrice">{{goodsPriceSum}}</span></h5>
                     <h6>
-                        <a ng-href="http://www.smartisan.com/shop/#/cart" class="nav-cart-btn" href="http://www.smartisan.com/shop/#/cart">去购物车</a>
+                        <a 
+                        class="nav-cart-btn" 
+                        href="javascript:;"
+                        @click="jumpToCar"
+                        >去购物车</a>
                     </h6>
                 </div>
             </div>
@@ -60,6 +64,12 @@ export default {
         return {
             
         }
+    },
+    mounted(){//购物车组件负责一加载就获取，而不是放在list列表加载获取
+        Axios.get('http://localhost:3100/api/getShopCarList')
+        .then((data)=>{
+            this.$store.commit('editGoodsList',data.data)
+        })
     },
     computed:{
         goodsList(){//商品列表
@@ -91,6 +101,9 @@ export default {
                 //console.log(data.data)
                 this.$store.commit('editGoodsList',data.data)
             })
+        },
+        jumpToCar(){
+          this.$router.push({name:'carlist'})
         }
     }
 }

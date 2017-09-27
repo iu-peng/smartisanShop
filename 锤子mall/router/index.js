@@ -13,6 +13,8 @@ import details from '@/views/details/details'
 import headerTnav from '@/components/header-tnav'
 //小导航
 import headerBnav from '@/components/header-bnav'
+//购物车
+import carList from '@/views/carList/car-list'
 
 let router = new Router({
 	mode:'history',
@@ -22,15 +24,19 @@ let router = new Router({
 			component:homePage,
 			children:[
 				{
-					path:'/',
+					path:'/',//列表页
 					components:{tnav:headerTnav,bnav:headerBnav,default:shopList},
 					name:'shoplist'
 				},
 				{
-					path:'/details/:id',
+					path:'/details/:id',//详情页
 					components:{tnav:headerTnav,bnav:headerBnav,default:details},
-					component:details,
 					name:'details'
+				},
+				{
+					path:'/cart',//购物车页面
+					components:{tnav:headerTnav,default:carList},
+					name:'carlist'
 				}
 			]
 		}

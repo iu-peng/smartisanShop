@@ -49,11 +49,11 @@ export default {
         .catch((data)=>{
         })
 
-        //请求购物车数据
-        Axios.get('http://localhost:3100/api/getShopCarList')
+        //请求购物车数据----购物车组件负责刚开启页面获取
+        /*Axios.get('http://localhost:3100/api/getShopCarList')
         .then((data)=>{
             this.$store.commit('editGoodsList',data.data)
-        })
+        })*/
     }
 
 }

@@ -28,9 +28,10 @@
             </li>
             <!--active-->
             <li 
-              :class="[{active:enterStatus},'nav-cart']" 
+              :class="[{active:enterStatus},'nav-cart']"
               @mouseover="changeEnterStatus"
               @mouseout="changeOutStatus"
+              @click="jumpToCar"
             >
                 <transition name="fade">
                     <shop-car @mouseover="changeEnterStatus" @mouseout="changeOutStatus"></shop-car>
@@ -67,6 +68,7 @@ export default {
     },
     methods:{
         changeEnterStatus(){//鼠标移入
+          console.log(333)
             if(this.timer){
                 clearTimeout(this.timer)
             }
@@ -76,6 +78,9 @@ export default {
             this.timer = setTimeout(()=>{
                 return this.enterStatus = false
             },200)
+        },
+        jumpToCar(){
+          this.$router.push({name:'carlist'})
         }
     }
 }
