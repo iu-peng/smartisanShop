@@ -7,7 +7,6 @@ import router from '@/router'
 
 import '@/assets/css/app.css'
 
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
