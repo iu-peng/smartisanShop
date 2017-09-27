@@ -5,7 +5,7 @@
     		<div class="item-img">
     			<img 
     				:alt="eachDataStitle.title" 
-    				:src="eachDataStitle.ali_image" 
+    				:src="eachDataStitle.ali_image+'?x-oss-process=image/resize,w_412/quality,Q_80/format,webp'" 
     				style="opacity: 1;"
     				/>
     		</div>
@@ -22,7 +22,8 @@
     		</div>
     		<div class="item-btns clearfix">
     			<span class="item-gray-btn">
-    				<a href="javascript:;" @click="jump">查看详情</a> 
+    				<!-- <a href="javascript:;" @click="jump">查看详情</a>  -->
+                    <router-link :to="{name:'details',params:{id:eachDataStitle.sku_id}}">查看详情</router-link>
     			</span>
     			<span 
     				v-show="eachDataStitle.direct_to_cart" 
@@ -76,11 +77,7 @@ export default {
 			.then((data)=>{
 				this.$store.commit('editGoodsList',data.data)
 			})
-		},
-        jump(){
-            this.$router.push( {name:'details',params:{id:this.eachData.id}} )
-            this.$store.commit('getItemData',this.eachData)
-        }
+		}
 	}
 }
 

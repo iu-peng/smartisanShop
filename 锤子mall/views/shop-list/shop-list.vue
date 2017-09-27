@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-view></router-view>
     <div id="main">
     	<div class="sku-box store-content">
     		<div class="sort-option">
@@ -26,6 +27,7 @@
 
 <script>
 import shopListItem from '@/views/shop-list/shop-list-item'
+import headerNav from '@/components/header-nav'
 import Axios from 'axios'
 
 export default {
