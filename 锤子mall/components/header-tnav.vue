@@ -3,7 +3,8 @@
       <div class="nav-global">
         <div class="container">
           <h1 class="nav-logo">
-            <a href="javascript:;"></a>
+            <!-- <a href="javascript:;"></a> -->
+            <router-link :to="{path:'/'}"></router-link>
           </h1>
           <ul class="nav-aside">
             <li class="nav-user">

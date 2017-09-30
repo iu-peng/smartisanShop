@@ -41,12 +41,18 @@
 											</div>
 										</div>
 										<div class="operation">
-											<a class="items-delete-btn" ></a>
+											<a 
+												class="items-delete-btn" 
+												@click="delGoods(item.sku_id)"
+											></a>
 										</div>
 										<div class="subtotal">¥ {{item.price*item.sku_num}}.00</div>
 										<div class="item-cols-num">
 											<div class="select js-select-quantity">
-												<span class="down down-disabled">-</span>
+												<span 
+													:class="[{'down-disabled':item.sku_num===1},'down']"
+													@click="reduceOneToCar(item)"
+												>-</span>
 												<span class="num">
 													<input type="text" style="display: inline-block;" :value="item.sku_num">
 													<ul><
@@ -54,7 +60,10 @@
 														<li>2</li>
 													</ul>
 												</span>
-												<span class="up">+</span>
+												<span 
+													:class="[{'up-disabled':item.sku_num===5},'up']"
+													@click="addOneToCar(item)"
+												>+</span>
 												
 											</div>
 										</div>
@@ -146,11 +155,73 @@
 	export default {
 		data(){
 			return{
-				shopedList:[],//返回的是购物车中的所有数据
-				shopedNum:0
+				//shopedList:[],//返回的是购物车中的所有数据
+				//shopedNum:0
 			}
 		},
-		mounted(){
+		computed:{
+			shopedList(){
+				return this.$store.state.goodsList
+			},
+			goodChecked(){
+
+			},
+			shopedNum(){
+				let n = 0;
+				//console.log(this.shopedList)
+				this.shopedList.forEach((item)=>{
+					n += item.sku_num 
+				})
+				return n
+			}
+		},
+		/*mounted(){//购物车组件负责一加载就获取，而不是放在list列表加载获取
+		    Axios.get('http://localhost:3100/api/getShopCarList')
+		    .then((data)=>{
+		        this.$store.commit('editGoodsList',data.data)
+		    })
+		},*/
+		methods:{
+			delGoods(goodId){
+			    Axios.post(
+			        'http://localhost:3100/api/removeCarShopById',
+			        {removeId:goodId}//JSON.stringify(goodId) 此处不用json请求
+			    )
+			    .then((data)=>{
+			        //console.log(data.data)
+			        this.$store.commit('editGoodsList',data.data)
+			    })
+			},
+			addOneToCar(item){//传过去的是该商品的所有信息
+				if(item.sku_num===5){
+					return
+				}
+				console.log(item)
+
+				Axios.post(
+					'http://localhost:3100/api/addOne',
+					{carList:JSON.stringify(item)}//发送的数据是该商品的所有信息
+				)
+				.then((data)=>{
+					this.$store.commit('editGoodsList',data.data)
+				})
+			},
+			reduceOneToCar(item){//传过去的是该商品的所有信息
+				if(item.sku_num===1){//最少为1个
+					return
+				}
+				console.log(item)
+
+				Axios.post(
+					'http://localhost:3100/api/reduceOne',
+					{carList:JSON.stringify(item)}//发送的数据是该商品的所有信息
+				)
+				.then((data)=>{
+					this.$store.commit('editGoodsList',data.data)
+				})
+			}
+		}
+		/*mounted(){
 			Axios.get('http://localhost:3100/api/getShopCarList')
 			.then((data)=>{
 			    return this.shopedList = data.data.car_list
@@ -160,6 +231,6 @@
 					this.shopedNum += item.sku_num 
 				})
 			})
-		}
+		},*/
 	}
 </script>

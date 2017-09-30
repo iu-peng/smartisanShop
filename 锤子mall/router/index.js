@@ -13,6 +13,8 @@ import details from '@/views/details/details'
 import headerTnav from '@/components/header-tnav'
 //小导航
 import headerBnav from '@/components/header-bnav'
+//小购物车图标
+import shopCar from '@/components/shop-car'
 //购物车
 import carList from '@/views/carList/car-list'
 

@@ -18,7 +18,7 @@
                             <div class="cart-item js-cart-item cart-item-sell">
                                 <div class="cart-item-inner">
                                     <div class="item-thumb">
-                                        <img :src="item.ali_image">
+                                        <img :src="item.ali_image+'?x-oss-process=image/resize,w_160/quality,Q_100/format,webp'">
                                     </div>
                                     <div class="item-desc">
                                         <div class="cart-cell">
@@ -92,7 +92,6 @@ export default {
     },
     methods:{
         delGoods(goodId){
-            console.log(goodId)
             Axios.post(
                 'http://localhost:3100/api/removeCarShopById',
                 {removeId:goodId}//JSON.stringify(goodId) 此处不用json请求
